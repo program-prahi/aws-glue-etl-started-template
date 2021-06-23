@@ -1,0 +1,39 @@
+{
+    "Name": "",
+    "Description": "",
+    "LogUri": "",
+    "Role": "",
+    "ExecutionProperty": {
+        "MaxConcurrentRuns": 0
+    },
+    "Command": {
+        "Name": "",
+        "ScriptLocation": "",
+        "PythonVersion": ""
+    },
+    "DefaultArguments": {
+        "KeyName": ""
+    },
+    "NonOverridableArguments": {
+        "KeyName": ""
+    },
+    "Connections": {
+        "Connections": [
+            ""
+        ]
+    },
+    "MaxRetries": 0,
+    "AllocatedCapacity": 0,
+    "Timeout": 0,
+    "MaxCapacity": null,
+    "SecurityConfiguration": "",
+    "Tags": {
+        "KeyName": ""
+    },
+    "NotificationProperty": {
+        "NotifyDelayAfter": 0
+    },
+    "GlueVersion": "",
+    "NumberOfWorkers": 0,
+    "WorkerType": "Standard"
+}
