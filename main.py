@@ -106,6 +106,6 @@ dataFrameDf = get_time_dimension(start_year, end_year)
 # dataFrameDf.coalesce(4).write.parquet(output_lg_partitioned_dir, partitionBy=['year','month'])
 secret_name = "pcsg-big-data-mysql-secrets"
 table_name = "timedimension2022"
-db_connection.write_jdbc_spark_session(dataFrameDf, secret_name, table_name)
+db_connection.write_jdbc_spark_session(dataFrameDf.limit(1000), secret_name, table_name)
 
 log.info("Job completed")
