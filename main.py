@@ -97,12 +97,15 @@ def get_time_dimension(start_year, end_year):
 
 
 log.info("Job running")
-start_year = "2020"
-end_year = "2021"
+start_year = "2021"
+end_year = "2022"
 
 dataFrameDf = get_time_dimension(start_year, end_year)
 
-s3_path = output_lg_partitioned_dir + 'timedimension'
-dataFrameDf.coalesce(4).write.parquet(output_lg_partitioned_dir, partitionBy=['year','month'])
+# s3_path = output_lg_partitioned_dir + 'timedimension'
+# dataFrameDf.coalesce(4).write.parquet(output_lg_partitioned_dir, partitionBy=['year','month'])
+secret_name = "pcsg-big-data-mysql-secrets"
+table_name = "timedimension2022"
+db_connection.write_jdbc_spark_session(dataFrameDf, secret_name, table_name)
 
 log.info("Job completed")

@@ -11,7 +11,7 @@ from utils.logger import Logger
 log = Logger(__file__).get_logger()
 
 
-def get_database_secret_string(secrets_name,region='us-west-2'):
+def get_database_secret_string(secrets_name,region='us-east-1'):
     try:
         session = boto3.Session()
         secret_client = session.client('secretsmanager',region_name=region)
@@ -109,6 +109,7 @@ def write_jdbc_spark_session(dataFrame,secret_name, tableName, write_mode= 'appe
     # Write dataframe to Database Table
     dataFrame.write \
         .format("jdbc") \
+        .mode(write_mode) \
         .option("driver", "com.mysql.cj.jdbc.Driver") \
         .option("url", jdbc_connection_string) \
         .option("dbtable", f"{database}.{tableName}") \
