@@ -22,15 +22,15 @@ def get_database_secret_string(secrets_name,region='us-east-1'):
         raise e
 
 
-# def get_redshift_connection_details(secrets_name):
-#     secret_string = get_database_secret_string(secrets_name)
-#     username = secret_string['username']
-#     password = secret_string['password']
-#     host = secret_string['host']
-#     port = secret_string['port']
-#     database = secret_string['dbname']
-#     iam_role = secret_string['redshift_role_arn']
-#     return username,password,host,port,database,iam_role
+def get_redshift_connection_details(secrets_name):
+    secret_string = get_database_secret_string(secrets_name)
+    username = secret_string['username']
+    password = secret_string['password']
+    host = secret_string['host']
+    port = secret_string['port']
+    database = secret_string['dbname']
+    iam_role = secret_string['redshift_role_arn']
+    return username,password,host,port,database,iam_role
 
 def get_mysql_server_connection_details(secrets_name):
 
@@ -49,33 +49,33 @@ def get_dynamic_frame_from_catalog(glueContext,metadatadb,table,transformationna
     return dyf
 
 
-# def get_dynamic_frame_from_redshift(glueContext,secrets_name,table_name,temp_dir):
-#     username, password, host, port, database, iam_role = get_redshift_connection_details(secrets_name)
-#     jdbc_connection_string = f"jdbc:redshift://{host}:{port}/{database}"
-#     connection_options = {  
-#         "url": jdbc_connection_string,
-#         "dbtable": table_name,
-#         "user": username,
-#         "password": password,
-#         "redshiftTmpDir": temp_dir,
-#         "aws_iam_role": iam_role
-#     }
-#     dyf = glueContext.create_dynamic_frame_from_options("redshift", connection_options)
-#     return dyf
+def get_dynamic_frame_from_redshift(glueContext,secrets_name,table_name,temp_dir):
+    username, password, host, port, database, iam_role = get_redshift_connection_details(secrets_name)
+    jdbc_connection_string = f"jdbc:redshift://{host}:{port}/{database}"
+    connection_options = {  
+        "url": jdbc_connection_string,
+        "dbtable": table_name,
+        "user": username,
+        "password": password,
+        "redshiftTmpDir": temp_dir,
+        "aws_iam_role": iam_role
+    }
+    dyf = glueContext.create_dynamic_frame_from_options("redshift", connection_options)
+    return dyf
 
 
-# def get_dynamic_from_redshift_query(spark_session,secrets_name,query):
-#     log.info("===================== READING DATA FROM REDSHIFT DATBASE ==============")
-#     username, password, host, port, database,iam_role = get_redshift_connection_details(secrets_name)
-#     jdbc_connection_string = f"jdbc:redshift://{host}:{port}/{database}"
-#     dyf = spark_session.read.format("jdbc") \
-#                         .option("driver","com.amazon.redshift.jdbc42.Driver") \
-#                         .option("url",jdbc_connection_string) \
-#                         .option("user",username) \
-#                         .option("password",password) \
-#                         .option("dbtable",f"({query}) as data") \
-#                         .load()
-#     return dyf
+def get_dynamic_from_redshift_query(spark_session,secrets_name,query):
+    log.info("===================== READING DATA FROM REDSHIFT DATBASE ==============")
+    username, password, host, port, database,iam_role = get_redshift_connection_details(secrets_name)
+    jdbc_connection_string = f"jdbc:redshift://{host}:{port}/{database}"
+    dyf = spark_session.read.format("jdbc") \
+                        .option("driver","com.amazon.redshift.jdbc42.Driver") \
+                        .option("url",jdbc_connection_string) \
+                        .option("user",username) \
+                        .option("password",password) \
+                        .option("dbtable",f"({query}) as data") \
+                        .load()
+    return dyf
 
 
 def get_dynamic_from_mysql_connection_query(glueContext,secrets_name,query):
@@ -126,8 +126,8 @@ def write_dataframe_jdbc_table(dataFrame,target_table,jdbc_url,connection_proper
 
 
 if __name__ == "__main__":
-    # secrets_name = 'dev-apolloware/dev-mssql/secrets'
-    secrets_name = "dev-apolloware/redshift/secrets"
+    # secrets_name = 'dev-glue-etl/dev-mssql/secrets'
+    secrets_name = "dev-glue-etl/redshift/secrets"
     # username,password,host,port,database = get_sql_server_connection_details(secret_name)
     # engine = sa.create_engine(f'mssql+pymssql://{username}:{password}@{host}:{port}/{database}')
     # table_name = "TelemetryCalculationType"

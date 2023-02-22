@@ -1,4 +1,4 @@
-# Glue Sample ETL
+# Glue Sample ETL Template
 
   - This Project repository is for sample Glue ETL operations run with JDBC connections
   - The ETL Operations (Extract, Transform, Load) are performed using [Spark-2.4.3](https://spark.apache.org/docs/2.4.3/index.html) available under the Managed ETL Service by AWS under [AWS Glue](https://docs.aws.amazon.com/en_us/glue/latest/dg/add-job.html)
@@ -36,7 +36,7 @@ zip -r glue-supporting-utils.zip ./utils -x '*__pycache__*'
       - Extra Python Library: [requirements.txt](./requirements.txt)
 
 ## Database Connection Establishments
-  - [db_connection.py](./apolloware_utils/db_connection.py)
+  - [db_connection.py](./utils/db_connection.py)
     - Contains relevent helper functions related to pulling tables from Databases using JDBC Connection
 
 ## Logger Utility

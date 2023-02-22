@@ -1,5 +1,5 @@
-echo "Copying ${2} to s3://dev-apolloware-data-raw/glue_resources/scripts/${1}/"
-aws s3 cp ${2} s3://dev-apolloware-data-raw/glue_resources/scripts/${1}/
+echo "Copying ${2} to s3://dev-glue-etl-data-raw/glue_resources/scripts/${1}/"
+aws s3 cp ${2} s3://dev-glue-etl-data-raw/glue_resources/scripts/${1}/
 echo "### Starting glue job run ####"
 echo "Do you wish continue?"
 select yn in "Yes" "No"; do

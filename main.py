@@ -8,7 +8,7 @@ from awsglue.dynamicframe import DynamicFrame
 from awsglue.transforms import Relationalize
 from awsglue.job import Job
 from pyspark.sql.types import StructType,StringType,StructField,LongType,DoubleType,BooleanType,DecimalType
-from pyspark.sql.functions import *
+from pyspark.sql.functions import col, explode, date_trunc, expr, year, month, dayofmonth,hour, minute,second, floor, unix_timestamp
 import datetime
 import boto3
 import importlib
@@ -40,7 +40,6 @@ args = getResolvedOptions(sys.argv,
                           'output_s3_dir'
                           ]
                           )
-
 job.init(args['JOB_NAME'])
 
 
@@ -104,7 +103,7 @@ dataFrameDf = get_time_dimension(start_year, end_year)
 
 # s3_path = output_lg_partitioned_dir + 'timedimension'
 # dataFrameDf.coalesce(4).write.parquet(output_lg_partitioned_dir, partitionBy=['year','month'])
-secret_name = "pcsg-big-data-mysql-secrets"
+secret_name = "xxxx-xxxx-xxxx-xxxx"
 table_name = "timedimension2022"
 db_connection.write_jdbc_spark_session(dataFrameDf.limit(1000), secret_name, table_name)
 
